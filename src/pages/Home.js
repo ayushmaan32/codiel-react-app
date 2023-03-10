@@ -7,16 +7,13 @@ const Home = ({ posts }) => {
         <div className={styles.postWrapper}>
           <div className={styles.postHeader}>
             <div className={styles.postAvatar}>
-              <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                alt="user-pic"
-              />
+              <img src="assets\profile.png" alt="user-pic" />
               <div>
                 <span className={styles.postAuthor}>{post.user.name}</span>
                 <span className={styles.postTime}>a minute ago</span>
               </div>
             </div>
-            <div className={styles.postContent}>{post.conent}</div>
+            <div className={styles.postContent}>{post.content}</div>
 
             <div className={styles.postActions}>
               <div className={styles.postLike}>

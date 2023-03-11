@@ -1,15 +1,16 @@
-import styles from '../styles/navbar.module.css';
 import { Link } from 'react-router-dom';
+import styles from '../styles/navbar.module.css';
+
 const Navbar = () => {
   return (
     <div className={styles.nav}>
-      <div className={styles.leftdiv}>
-        <a href="/">
+      <div className={styles.leftDiv}>
+        <Link to="/">
           <img
+            alt=""
             src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
-            alt="logo"
           />
-        </a>
+        </Link>
       </div>
 
       <div className={styles.rightNav}>
@@ -17,26 +18,26 @@ const Navbar = () => {
           <a href="/">
             <img
               src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-              alt="dp"
+              alt=""
               className={styles.userDp}
             />
           </a>
           <span>Ayushmaan</span>
         </div>
-      </div>
 
-      <div className={styles.navLinks}>
-        <ul>
-          <li>
-            <Link to="/login">Log In</Link>
-          </li>
-          <li>
-            <Link to="/logout">Log Out</Link>
-          </li>
-          <li>
-            <a href="/">Register</a>
-          </li>
-        </ul>
+        <div className={styles.navLinks}>
+          <ul>
+            <li>
+              <Link to="/login">Log in</Link>
+            </li>
+            <li>
+              <a href="/">Log out</a>
+            </li>
+            <li>
+              <a href="/">Register</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

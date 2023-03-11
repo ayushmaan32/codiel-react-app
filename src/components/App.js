@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-
+import { Routes, Route } from 'react-router-dom';
 import { getPosts } from '../api';
-import { Home } from '../pages';
+import { Home, Login } from '../pages';
 import { Loader, Navbar } from './';
 
 function App() {
@@ -26,10 +26,18 @@ function App() {
     return <Loader />;
   }
 
+  const Page404 = () => {
+    return <h1>404</h1>;
+  };
+
   return (
     <div className="App">
       <Navbar />
-      <Home posts={posts} />
+      <Routes>
+        <Route path="/" element={<Home posts={posts} />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="*" element={<Page404 />}></Route>
+      </Routes>
     </div>
   );
 }

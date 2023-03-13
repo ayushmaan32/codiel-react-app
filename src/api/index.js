@@ -1,11 +1,11 @@
-import { API_URLS, LOCALSTORAGE_TOKEN_KEY } from '../utils';
+import { API_URLS, getFormBuddy, LOCALSTORAGE_TOKEN_KEY } from '../utils';
 
 const customFetch = async (url, { body, ...customConfig }) => {
   const token = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
 
   const headers = {
-    'content-type': 'application/json',
-    Accept: 'application/json',
+    'content-type': 'application/x-www-form-urlencoded',
+    // Accept: 'application/json',
   };
   const config = {
     ...customConfig,
@@ -14,6 +14,9 @@ const customFetch = async (url, { body, ...customConfig }) => {
       ...customConfig.headers,
     },
   };
+  if (body) {
+    config.body = getFormBuddy(body);
+  }
 
   try {
     const response = await fetch(url, config);

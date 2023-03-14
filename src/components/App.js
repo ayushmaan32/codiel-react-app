@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 // import { getPosts } from '../api';
 import { useAuth } from '../hookes';
-import { Home, Login } from '../pages';
+import { Home, Login, Signup } from '../pages';
 import { Loader, Navbar } from './';
 
 function App() {
@@ -39,6 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
         <Route path="*" element={<Page404 />}></Route>
       </Routes>
     </div>

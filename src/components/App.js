@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { getPosts } from '../api';
+// import { getPosts } from '../api';
 import { useAuth } from '../hookes';
 import { Home, Login } from '../pages';
 import { Loader, Navbar } from './';
@@ -11,19 +11,19 @@ function App() {
 
   const auth = useAuth();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await getPosts();
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const response = await getPosts();
 
-      if (response.success) {
-        setPosts(response.data.posts);
-      }
+  //     if (response.success) {
+  //       setPosts(response.data.posts);
+  //     }
 
-      setLoading(false);
-    };
+  //     setLoading(false);
+  //   };
 
-    fetchPosts();
-  }, []);
+  //   fetchPosts();
+  // }, []);
 
   if (auth.loading) {
     return <Loader />;
@@ -37,7 +37,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home posts={posts} />}></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="*" element={<Page404 />}></Route>
       </Routes>

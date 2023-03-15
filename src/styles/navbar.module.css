@@ -15,6 +15,7 @@
 }
 .nav .userDp {
   height: 40px;
+  background-color: transparent;
 }
 .nav .user {
   display: flex;

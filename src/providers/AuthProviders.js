@@ -4,6 +4,7 @@ const initialstate = {
   user: null,
   login: () => {},
   logout: () => {},
+  updateUser: () => {},
   loading: true,
 };
 

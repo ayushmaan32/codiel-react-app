@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import styles from '../styles/settings.module.css';
 import { useAuth } from '../hookes';
 
@@ -11,7 +14,58 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [savingForm, setSavingForm] = useState(false);
 
-  const updateProfile = () => {};
+  const clearform = () => {
+    setPassword('');
+    setConfirmPassword('');
+  };
+
+  const updateProfile = async () => {
+    console.log(auth.user._id, name, password, confirmPassword);
+    setSavingForm(true);
+
+    let error = false;
+    if (!name || !password || !confirmPassword) {
+      toast.error('Please fill all the fields ', {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+      error = true;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error('Make sure password and confirm password Matches', {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+
+      error = true;
+    }
+
+    if (error) {
+      return setSavingForm(false);
+    }
+
+    const response = await auth.updateUser(
+      auth.user._id,
+      name,
+      password,
+      confirmPassword
+    );
+    console.log(response);
+
+    if (response.success) {
+      setEditMode(false);
+      setSavingForm(false);
+      clearform();
+
+      return toast.success('User updated successfully', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      toast.error(response.message, {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+    }
+    setSavingForm(false);
+  };
 
   return (
     <div className={styles.settings}>
@@ -36,7 +90,7 @@ const Settings = () => {
             onChange={(e) => setName(e.target.value)}
           />
         ) : (
-          <div className={styles.fieldValue}>{auth.user?.email}</div>
+          <div className={styles.fieldValue}>{auth.user?.name}</div>
         )}
       </div>
 
@@ -87,6 +141,7 @@ const Settings = () => {
           </button>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

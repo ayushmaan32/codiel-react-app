@@ -6,7 +6,7 @@ export const setItemInLocalStorage = (key, value) => {
   }
 
   const valueToStore =
-    typeof value !== 'String' ? JSON.stringify(value) : value;
+    typeof value !== 'string' ? JSON.stringify(value) : value;
 
   return localStorage.setItem(key, valueToStore);
 };
@@ -24,13 +24,23 @@ export const removeItemFromLocalStorage = (key) => {
 };
 
 export const getFormBuddy = (params) => {
-  let formbuddy = [];
-  for (let property in params) {
-    let encodedKey = encodeURIComponent(property); //user name => 'user%20name'
-    let encodedValue = encodeURIComponent(params[property]); // ayushman 123 => ayushman%202304
+  // let formbuddy = [];
+  // for (let property in params) {
+  //   let encodedKey = encodeURIComponent(property); //user name => 'user%20name'
+  //   let encodedValue = encodeURIComponent(params[property]); // ayushman 123 => ayushman%202304
+  //   formbuddy.push(encodedKey + '=' + encodedValue);
+  // }
+  // console.log(formbuddy);
+  // return formbuddy.join('&'); // 'username=ayushman&password=123213
 
-    formbuddy.push(encodedKey + '=' + encodedValue);
+  let formBody = [];
+
+  for (let property in params) {
+    let encodedKey = encodeURIComponent(property); // 'user name' => 'user%20name'
+    let encodedValue = encodeURIComponent(params[property]); // aakash 123 => aakash%2020123
+
+    formBody.push(encodedKey + '=' + encodedValue);
   }
-  console.log(formbuddy);
-  return formbuddy.join('&'); // 'username=ayushman&password=123213
+
+  return formBody.join('&'); // 'username=aakash&password=123213'
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; //useNavigate in place of useHistory
+import { useNavigate, Navigate } from 'react-router-dom'; //useNavigate in place of useHistory
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,6 +59,11 @@ const Signup = () => {
 
     setSigningUp(false);
   };
+
+  //if user is log in then we will not show the sign up page
+  if (auth.user) {
+    return <Navigate to="/" replace={true} />;
+  }
 
   return (
     <form className={styles.loginForm} onSubmit={handleFormSubmit}>

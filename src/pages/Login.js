@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styles from '../styles/login.module.css';
-import { login } from '../api';
+// import { login } from '../api';
 
 import { useAuth } from '../hookes';
 
@@ -39,6 +40,11 @@ const Login = () => {
 
     setLoggingIn(false);
   };
+
+  //if user is log in then we will not show the login page
+  if (auth.user) {
+    return <Navigate to="/" replace={true} />;
+  }
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { login as userlogin, register } from '../api';
+import { editProfile, login as userlogin, register } from '../api';
 import jwt from 'jwt-decode';
 
 import { AuthContext } from '../providers/AuthProviders';
@@ -29,6 +29,48 @@ export const useProvideAuth = () => {
 
     setLoading(false);
   }, []);
+
+  // const updateUser = async (userId, name, password, confirmPassword) => {
+  //   const response = await editProfile(userId, name, password, confirmPassword);
+  //   console.log(userId, name, password, confirmPassword);
+  //   if (response.success) {
+  //     setUser(response.data.user);
+  //     setItemInLocalStorage(
+  //       LOCALSTORAGE_TOKEN_KEY,
+  //       response.data.token ? response.data.token : null
+  //     );
+
+  //     return {
+  //       success: true,
+  //     };
+  //   } else {
+  //     return {
+  //       success: false,
+  //       message: response.message,
+  //     };
+  //   }
+  // };
+
+  const updateUser = async (userId, name, password, confirmPassword) => {
+    const response = await editProfile(userId, name, password, confirmPassword);
+
+    console.log('response', response);
+    if (response.success) {
+      setUser(response.data.user);
+      setItemInLocalStorage(
+        LOCALSTORAGE_TOKEN_KEY,
+        response.data.token ? response.data.token : null
+      );
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.message,
+      };
+    }
+  };
 
   const login = async (email, password) => {
     const response = await userlogin(email, password);
@@ -76,5 +118,6 @@ export const useProvideAuth = () => {
     login,
     signup,
     logout,
+    updateUser,
   };
 };

@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styles from '../styles/settings.module.css';
-import { useAuth } from '../hookes';
+import { useAuth } from '../hooks';
 
 const Settings = () => {
   const auth = useAuth();

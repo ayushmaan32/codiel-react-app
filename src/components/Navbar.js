@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hookes';
+import { useAuth } from '../hooks';
 import styles from '../styles/navbar.module.css';
 
 const Navbar = () => {

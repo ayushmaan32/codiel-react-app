@@ -4,7 +4,7 @@ import { useNavigate, Navigate } from 'react-router-dom'; //useNavigate in place
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useAuth } from '../hookes';
+import { useAuth } from '../hooks';
 import styles from '../styles/login.module.css';
 
 const Signup = () => {

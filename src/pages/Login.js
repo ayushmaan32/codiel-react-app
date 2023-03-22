@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import styles from '../styles/login.module.css';
 // import { login } from '../api';
 
-import { useAuth } from '../hookes';
+import { useAuth } from '../hooks';
 
 const Login = () => {
   const [email, setEmail] = useState('');

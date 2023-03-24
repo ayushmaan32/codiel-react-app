@@ -28,7 +28,7 @@ const Login = () => {
 
       if (response.success) {
         toast.success('Successfully logged In !', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       } else {
         console.log(response);

@@ -4,6 +4,7 @@ import Comment from '../components/Comments';
 import { useState, useEffect } from 'react';
 import { getPosts } from '../api';
 import { Loader } from '../components';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -38,7 +39,17 @@ const Home = () => {
             <div className={styles.postAvatar}>
               <img src="assets\profile.png" alt="user-pic" />
               <div>
-                <span className={styles.postAuthor}>{post.user.name}</span>
+                <Link
+                  to={{
+                    pathname: `/user/${post.user._id}`,
+                    state: {
+                      user: post.user,
+                    },
+                  }}
+                  className={styles.postAuthor}
+                >
+                  {post.user.name}
+                </Link>
                 <span className={styles.postTime}>a minute ago</span>
               </div>
             </div>

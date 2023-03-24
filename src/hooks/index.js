@@ -1,5 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { editProfile, login as userlogin, register } from '../api';
+import {
+  editProfile,
+  fetchUserFriends,
+  login as userlogin,
+  register,
+} from '../api';
 import jwt from 'jwt-decode';
 
 import { AuthContext } from '../providers/AuthProviders';
@@ -19,15 +24,26 @@ export const useProvideAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userToken = getItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
+    const getUser = async () => {
+      const userToken = getItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
 
-    if (userToken) {
-      const user = jwt(userToken);
+      if (userToken) {
+        const user = jwt(userToken);
+        const response = await fetchUserFriends();
+        let friends = [];
+        if (response.success) {
+          friends = response.data.friends;
+        }
 
-      setUser(user);
-    }
+        setUser({
+          ...user,
+          friends,
+        });
+      }
 
-    setLoading(false);
+      setLoading(false);
+    };
+    getUser();
   }, []);
 
   // const updateUser = async (userId, name, password, confirmPassword) => {
@@ -112,6 +128,25 @@ export const useProvideAuth = () => {
     removeItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
   };
 
+  const updateUserFriends = (addFriend, friend) => {
+    if (addFriend) {
+      setUser({
+        ...user,
+        friends: [...user.friends, friend],
+      });
+      return;
+    }
+
+    const newFriends = user.friends.filter(
+      (f) => f.to_user._id !== friend.to_user._id
+    );
+
+    setUser({
+      ...user,
+      friends: newFriends,
+    });
+  };
+
   return {
     user,
     loading,
@@ -119,5 +154,6 @@ export const useProvideAuth = () => {
     signup,
     logout,
     updateUser,
+    updateUserFriends,
   };
 };

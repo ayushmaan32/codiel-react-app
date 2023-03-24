@@ -1,15 +1,16 @@
 // import { useEffect, useState } from 'react';
 // import { func } from 'prop-types';
 // import { Router } from 'express';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 // import { getPosts } from '../api';
 import { useAuth } from '../hooks';
-import { Home, Login, Signup, Settings } from '../pages';
+import { Home, Login, Signup, Settings, UserProfile } from '../pages';
 
 import { Loader, Navbar } from './';
 
 function PrivateRoute() {
   const auth = useAuth();
+  console.log(auth.user);
 
   // <Routes>
   //   <Route
@@ -24,28 +25,12 @@ function PrivateRoute() {
   //   />
   // </Routes>
 
-  return auth.user ? <Settings /> : <Navigate to="/login" />;
+  return auth.user ? <Outlet /> : <Navigate to="/login" />;
 }
 
 function App() {
-  // const [posts, setPosts] = useState([]);
-  // const [loading, setLoading] = useState(true);
-
   const auth = useAuth();
-
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     const response = await getPosts();
-
-  //     if (response.success) {
-  //       setPosts(response.data.posts);
-  //     }
-
-  //     setLoading(false);
-  //   };
-
-  //   fetchPosts();
-  // }, []);
+  console.log('auth', auth);
 
   if (auth.loading) {
     return <Loader />;
@@ -63,7 +48,11 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/settings" element={<PrivateRoute />}></Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/user/:userId" element={<UserProfile />} />
+        </Route>
 
         <Route path="*" element={<Page404 />}></Route>
       </Routes>

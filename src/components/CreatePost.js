@@ -1,11 +1,31 @@
 import { useState } from 'react';
 import styles from '../styles/home.module.css';
+import { addPost } from '../api';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreatePost = () => {
   const [post, setPost] = useState('');
   const [addingPost, setAddingPost] = useState(false);
 
-  const handleAddPostClick = () => {};
+  const handleAddPostClick = async () => {
+    setAddingPost(true);
+    const response = await addPost(post);
+
+    if (response.success) {
+      setPost('');
+      toast.success('Post created Successfully', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      toast.error(response.message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+
+    setAddingPost(false);
+  };
 
   return (
     <div className={styles.createPost}>

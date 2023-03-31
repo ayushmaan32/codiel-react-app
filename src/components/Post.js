@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { useToasts } from 'react-toast-notifications';
 
-import { createComment } from '../api';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { createComment, toggleLike } from '../api';
 import { usePosts } from '../hooks';
 import styles from '../styles/home.module.css';
 import { Comments } from '.';
@@ -23,16 +25,35 @@ const Post = ({ post }) => {
       if (response.success) {
         setComment('');
         posts.addComment(response.data.comment, post._id);
-        // addToast('Comment created successfully!', {
-        //   appearance: 'success',
-        // });
+        toast.success('Comment created successfully!', {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       } else {
-        // addToast(response.message, {
-        //   appearance: 'error',
-        // });
+        toast.error(response.message, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       }
 
       setCreatingComment(false);
+    }
+  };
+
+  const handlePostLikeClick = async () => {
+    const response = await toggleLike(post._id, 'Post');
+    if (response.success) {
+      if (response.data.deleted) {
+        toast.success('Like reomove successfully!', {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      } else {
+        toast.success('Like created successfully', {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      }
+    } else {
+      toast.error(response.message, {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
     }
   };
 
@@ -56,17 +77,19 @@ const Post = ({ post }) => {
             >
               {post.user.name}
             </Link>
-            <span className={styles.postTime}>a minute ago</span>
+            <span className={styles.postTime}>{post.createdAt}</span>
           </div>
         </div>
         <div className={styles.postContent}>{post.content}</div>
 
         <div className={styles.postActions}>
           <div className={styles.postLike}>
-            <img
-              src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
-              alt="likes-icon"
-            />
+            <button onClick={handlePostLikeClick}>
+              <img
+                src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
+                alt="likes-icon"
+              />
+            </button>
             <span>{post.likes.length}</span>
           </div>
 
@@ -93,6 +116,7 @@ const Post = ({ post }) => {
           ))}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

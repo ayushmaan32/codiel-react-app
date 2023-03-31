@@ -15,7 +15,6 @@
 }
 .nav .userDp {
   height: 40px;
-  background-color: transparent;
 }
 .nav .user {
   display: flex;
@@ -103,6 +102,7 @@
   align-items: center;
   padding: 9px 14px;
 }
+
 .searchResultsRow:hover {
   background-color: #eceffa;
   cursor: pointer;

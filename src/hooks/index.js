@@ -170,6 +170,7 @@ export const useProvidePosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await getPosts();
+      console.log(response);
 
       if (response.success) {
         setPosts(response.data.posts);
@@ -183,6 +184,18 @@ export const useProvidePosts = () => {
 
   const addPostToState = (post) => {
     const newPosts = [post, ...posts];
+
+    setPosts(newPosts);
+  };
+
+  const addComment = (comment, postId) => {
+    const newPosts = posts.map((post) => {
+      if (post._id === postId) {
+        return { ...post, comments: [...post.comments, comment] };
+      }
+      return post;
+    });
+
     setPosts(newPosts);
   };
 
@@ -190,5 +203,6 @@ export const useProvidePosts = () => {
     data: posts,
     loading,
     addPostToState,
+    addComment,
   };
 };
